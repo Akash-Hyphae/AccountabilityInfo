@@ -1,9 +1,8 @@
 import axios from 'axios';
 
-const baseURL = import.meta.env.VITE_API_URL || '';
-
+// Ensure baseURL is always empty string so all Axios requests use relative URLs against current origin (/api/...)
 export const api = axios.create({
-  baseURL,
+  baseURL: '',
   headers: {
     'Content-Type': 'application/json',
   },

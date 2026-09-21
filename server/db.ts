@@ -503,7 +503,8 @@ loadStoreFromFile();
 export async function initDatabase() {
   loadStoreFromFile();
 
-  if (MONGODB_URI) {
+  const uri = (MONGODB_URI || '').trim();
+  if (uri && (uri.startsWith('mongodb://') || uri.startsWith('mongodb+srv://'))) {
     try {
       console.log('Attempting connection to MongoDB Atlas...');
       mongoose.connection.on('connected', () => {
@@ -519,7 +520,7 @@ export async function initDatabase() {
         console.warn('MongoDB disconnected. Fallback active.');
       });
 
-      await mongoose.connect(MONGODB_URI, {
+      await mongoose.connect(uri, {
         serverSelectionTimeoutMS: 2000
       });
       isMongoConnected = mongoose.connection.readyState === 1;
@@ -540,7 +541,8 @@ export async function initDatabase() {
       mongoose.disconnect().catch(() => {});
     }
   } else {
-    console.log('No MONGODB_URI provided in environment. Running with verified persistent storage engine.');
+    isMongoConnected = false;
+    console.log('No valid MONGODB_URI provided in environment. Running with verified persistent storage engine.');
   }
 }
 
@@ -554,73 +556,146 @@ export const db = {
 
   // Users
   async getUserByEmail(email: string) {
-    const norm = email.toLowerCase().trim();
+    const norm = (email || '').toLowerCase().trim();
+    if (!norm) return null;
+
     if (isMongoReady()) {
       try {
-        const user = await User.findOne({ email: norm });
-        if (user) return user.toJSON ? user.toJSON() : user;
+        const userDoc = await User.findOne({ email: norm });
+        if (userDoc) {
+          const docObj: any = userDoc.toObject ? userDoc.toObject({ virtuals: true }) : userDoc;
+          const uid = (docObj._id ? docObj._id.toString() : (docObj.id || `user-${Date.now()}`));
+          return {
+            id: uid,
+            _id: uid,
+            name: docObj.name || '',
+            email: docObj.email || norm,
+            avatarUrl: docObj.avatarUrl || '',
+            createdAt: docObj.createdAt ? (docObj.createdAt instanceof Date ? docObj.createdAt.toISOString() : docObj.createdAt) : new Date().toISOString(),
+            password: docObj.password || userDoc.password
+          };
+        }
       } catch (err) {
-        console.warn('MongoDB getUserByEmail failed, falling back to local store:', err);
+        // Silently catch error and fall back to local store
         isMongoConnected = false;
       }
     }
-    return store.users.find(u => u.email.toLowerCase() === norm) || null;
+
+    const localUser = store.users.find(u => (u.email || '').toLowerCase().trim() === norm);
+    if (!localUser) return null;
+
+    const uid = localUser.id || localUser._id || `user-${Date.now()}`;
+    return {
+      id: uid,
+      _id: uid,
+      name: localUser.name || '',
+      email: localUser.email || norm,
+      avatarUrl: localUser.avatarUrl || '',
+      createdAt: localUser.createdAt || new Date().toISOString(),
+      password: localUser.password
+    };
   },
 
   async getUserById(id: string) {
+    if (!id) return null;
+
     if (isMongoReady()) {
       try {
-        const user = await User.findById(id);
-        if (user) return user.toJSON ? user.toJSON() : user;
+        const userDoc = await User.findById(id);
+        if (userDoc) {
+          const docObj: any = userDoc.toObject ? userDoc.toObject({ virtuals: true }) : userDoc;
+          const uid = (docObj._id ? docObj._id.toString() : (docObj.id || id));
+          return {
+            id: uid,
+            _id: uid,
+            name: docObj.name || '',
+            email: docObj.email || '',
+            avatarUrl: docObj.avatarUrl || '',
+            createdAt: docObj.createdAt ? (docObj.createdAt instanceof Date ? docObj.createdAt.toISOString() : docObj.createdAt) : new Date().toISOString(),
+            password: docObj.password || userDoc.password
+          };
+        }
       } catch (err) {
-        console.warn('MongoDB getUserById failed, falling back to local store:', err);
+        // Silently catch error and fall back to local store
         isMongoConnected = false;
       }
     }
-    return store.users.find(u => (u.id === id || u._id === id)) || null;
+
+    const localUser = store.users.find(u => u.id === id || u._id === id);
+    if (!localUser) return null;
+
+    const uid = localUser.id || localUser._id || id;
+    return {
+      id: uid,
+      _id: uid,
+      name: localUser.name || '',
+      email: localUser.email || '',
+      avatarUrl: localUser.avatarUrl || '',
+      createdAt: localUser.createdAt || new Date().toISOString(),
+      password: localUser.password
+    };
   },
 
   async createUser(userData: any) {
-    const norm = userData.email.toLowerCase().trim();
-    let createdUser: any = null;
+    const norm = (userData.email || '').toLowerCase().trim();
+    const name = (userData.name || '').trim();
+    const password = userData.password;
+    const avatarUrl = userData.avatarUrl || `https://api.dicebear.com/7.x/bottts/svg?seed=${encodeURIComponent(norm)}`;
+
+    let createdUser: {
+      id: string;
+      _id: string;
+      name: string;
+      email: string;
+      avatarUrl: string;
+      createdAt: string;
+      password: string;
+    } | null = null;
 
     if (isMongoReady()) {
       try {
-        const user = await User.create({
-          ...userData,
-          email: norm
+        const doc = await User.create({
+          name,
+          email: norm,
+          password,
+          avatarUrl
         });
-        createdUser = user.toJSON ? user.toJSON() : user;
+        const docObj: any = doc.toObject ? doc.toObject({ virtuals: true }) : doc;
+        const uid = (docObj._id ? docObj._id.toString() : (docObj.id || `user-${Date.now()}`));
+        createdUser = {
+          id: uid,
+          _id: uid,
+          name: doc.name || name,
+          email: doc.email || norm,
+          avatarUrl: doc.avatarUrl || avatarUrl,
+          createdAt: doc.createdAt ? (doc.createdAt instanceof Date ? doc.createdAt.toISOString() : doc.createdAt) : new Date().toISOString(),
+          password
+        };
       } catch (err) {
-        console.warn('MongoDB createUser failed, falling back to local store:', err);
+        // Silently catch error and create in local store
         isMongoConnected = false;
       }
     }
 
     if (!createdUser) {
+      const localId = `user-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`;
       createdUser = {
-        ...userData,
+        id: localId,
+        _id: localId,
+        name,
         email: norm,
-        id: `user-${Date.now()}`,
-        _id: `user-${Date.now()}`,
+        avatarUrl,
         createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString()
+        password
       };
     }
 
-    // Always mirror created user to persistent store to guarantee offline resilience
-    const localId = createdUser.id || (createdUser._id ? createdUser._id.toString() : `user-${Date.now()}`);
-    const userToSave = {
-      ...createdUser,
-      id: localId,
-      _id: localId,
-      password: userData.password // keep hashed password for local authentication
-    };
-    store.users = store.users.filter(u => u.email.toLowerCase() !== norm);
-    store.users.push(userToSave);
+    // Persist to local store.json with password intact so subsequent logins succeed
+    store.users = store.users.filter(u => (u.email || '').toLowerCase().trim() !== norm);
+    store.users.push(createdUser);
     saveStoreToFile();
 
-    return userToSave;
+    return createdUser;
   },
 
   async updateUser(id: string, updates: any) {

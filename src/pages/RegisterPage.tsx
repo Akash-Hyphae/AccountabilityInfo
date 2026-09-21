@@ -52,8 +52,13 @@ export const RegisterPage: React.FC = () => {
       <div className="mt-6 sm:mx-auto sm:w-full sm:max-w-md px-4">
         <div className="bg-white dark:bg-[#1e293b] py-8 px-6 sm:px-10 shadow-xl rounded-3xl border border-gray-200/80 dark:border-gray-800">
           {error && (
-            <div className="mb-4 p-3 rounded-xl bg-red-50 dark:bg-red-950/50 border border-red-200 dark:border-red-900 text-red-600 dark:text-red-400 text-xs">
-              {error}
+            <div className="mb-4 p-3 rounded-xl bg-red-50 dark:bg-red-950/50 border border-red-200 dark:border-red-900 text-red-600 dark:text-red-400 text-xs flex flex-col gap-1">
+              <span>{error}</span>
+              {error.toLowerCase().includes('already exists') && (
+                <Link to="/login" className="font-semibold text-emerald-600 dark:text-emerald-400 underline mt-0.5">
+                  Click here to sign in with this email →
+                </Link>
+              )}
             </div>
           )}
 
