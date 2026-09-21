@@ -1,0 +1,643 @@
+{
+  "users": [
+    {
+      "id": "demo-user-123",
+      "_id": "demo-user-123",
+      "name": "Alex Rivera",
+      "email": "demo@accountability.info",
+      "password": "$2b$10$AkM4wioLOvVo37Op3uQzYebxodgHey8xI0M1F4OnInwZvnRjJrS4.",
+      "avatarUrl": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80",
+      "createdAt": "2026-09-21T18:33:34.951Z"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "task-1",
+      "_id": "task-1",
+      "userId": "demo-user-123",
+      "title": "Complete DSA practice (Binary Trees)",
+      "description": "Solve 3 LeetCode problems on tree traversals",
+      "priority": "highest",
+      "completed": true,
+      "dueDate": "2026-09-21",
+      "date": "2026-09-21",
+      "order": 1,
+      "createdAt": "2026-09-21T18:33:34.951Z"
+    },
+    {
+      "id": "task-2",
+      "_id": "task-2",
+      "userId": "demo-user-123",
+      "title": "Finish project API & JWT authentication",
+      "description": "Implement Express middleware and protected routes",
+      "priority": "highest",
+      "completed": true,
+      "dueDate": "2026-09-21",
+      "date": "2026-09-21",
+      "order": 2,
+      "createdAt": "2026-09-21T18:33:34.951Z"
+    },
+    {
+      "id": "task-3",
+      "_id": "task-3",
+      "userId": "demo-user-123",
+      "title": "Prepare interview questions on System Design",
+      "description": "Study caching strategies & rate limiting",
+      "priority": "highest",
+      "completed": false,
+      "dueDate": "2026-09-21",
+      "date": "2026-09-21",
+      "order": 3,
+      "createdAt": "2026-09-21T18:33:34.951Z"
+    },
+    {
+      "id": "task-4",
+      "_id": "task-4",
+      "userId": "demo-user-123",
+      "title": "Read OS concepts (Processes & Threads)",
+      "description": "Operating Systems chapter 4 concurrency",
+      "priority": "medium",
+      "completed": true,
+      "dueDate": "2026-09-21",
+      "date": "2026-09-21",
+      "order": 1,
+      "createdAt": "2026-09-21T18:33:34.951Z"
+    },
+    {
+      "id": "task-5",
+      "_id": "task-5",
+      "userId": "demo-user-123",
+      "title": "Practice SQL aggregations & indexing queries",
+      "description": "HackerRank 15 query challenges",
+      "priority": "medium",
+      "completed": false,
+      "dueDate": "2026-09-21",
+      "date": "2026-09-21",
+      "order": 2,
+      "createdAt": "2026-09-21T18:33:34.951Z"
+    },
+    {
+      "id": "task-6",
+      "_id": "task-6",
+      "userId": "demo-user-123",
+      "title": "Organize project repository notes & docs",
+      "description": "Clean up README and update API documentation",
+      "priority": "least",
+      "completed": false,
+      "dueDate": "2026-09-21",
+      "date": "2026-09-21",
+      "order": 1,
+      "createdAt": "2026-09-21T18:33:34.951Z"
+    },
+    {
+      "id": "task-7",
+      "_id": "task-7",
+      "userId": "demo-user-123",
+      "title": "Morning 4km run & stretch",
+      "description": "Cardio routine in the park",
+      "priority": "other",
+      "completed": true,
+      "dueDate": "2026-09-21",
+      "date": "2026-09-21",
+      "order": 1,
+      "createdAt": "2026-09-21T18:33:34.951Z"
+    },
+    {
+      "id": "task-8",
+      "_id": "task-8",
+      "userId": "demo-user-123",
+      "title": "Read 20 pages of \"Atomic Habits\"",
+      "description": "Focus on habit stacking chapter",
+      "priority": "other",
+      "completed": true,
+      "dueDate": "2026-09-21",
+      "date": "2026-09-21",
+      "order": 2,
+      "createdAt": "2026-09-21T18:33:34.951Z"
+    }
+  ],
+  "planner": [
+    {
+      "id": "planner-0",
+      "_id": "planner-0",
+      "userId": "demo-user-123",
+      "date": "2026-09-21",
+      "time": "6:15 AM",
+      "plannedTask": "Morning Meditation & Journaling",
+      "actualTask": "Meditated 15 mins and reviewed goals",
+      "isCompleted": true,
+      "order": 0,
+      "updatedAt": "2026-09-21T18:46:02.993Z"
+    },
+    {
+      "id": "planner-1",
+      "_id": "planner-1",
+      "userId": "demo-user-123",
+      "date": "2026-09-21",
+      "time": "7:00 AM",
+      "plannedTask": "Morning Run & Hydration",
+      "actualTask": "4km run completed, feeling fresh",
+      "isCompleted": true,
+      "order": 1
+    },
+    {
+      "id": "planner-2",
+      "_id": "planner-2",
+      "userId": "demo-user-123",
+      "date": "2026-09-21",
+      "time": "8:00 AM",
+      "plannedTask": "DSA Practice (Tree Traversals)",
+      "actualTask": "Completed 2 problems, reviewed BFS",
+      "isCompleted": true,
+      "order": 2
+    },
+    {
+      "id": "planner-3",
+      "_id": "planner-3",
+      "userId": "demo-user-123",
+      "date": "2026-09-21",
+      "time": "9:00 AM",
+      "plannedTask": "Project Architecture & Backend Setup",
+      "actualTask": "Configured Express, Mongoose & auth middleware",
+      "isCompleted": true,
+      "order": 3
+    },
+    {
+      "id": "planner-4",
+      "_id": "planner-4",
+      "userId": "demo-user-123",
+      "date": "2026-09-21",
+      "time": "10:00 AM",
+      "plannedTask": "API Endpoints Development",
+      "actualTask": "Built tasks, planner & reflection routes",
+      "isCompleted": true,
+      "order": 4
+    },
+    {
+      "id": "planner-5",
+      "_id": "planner-5",
+      "userId": "demo-user-123",
+      "date": "2026-09-21",
+      "time": "11:00 AM",
+      "plannedTask": "Code Review & Testing",
+      "actualTask": "Tested routes with Postman, fixed CORS",
+      "isCompleted": true,
+      "order": 5
+    },
+    {
+      "id": "planner-6",
+      "_id": "planner-6",
+      "userId": "demo-user-123",
+      "date": "2026-09-21",
+      "time": "12:00 PM",
+      "plannedTask": "",
+      "actualTask": "",
+      "isCompleted": false,
+      "order": 6
+    },
+    {
+      "id": "planner-7",
+      "_id": "planner-7",
+      "userId": "demo-user-123",
+      "date": "2026-09-21",
+      "time": "1:00 PM",
+      "plannedTask": "OS Concepts Reading",
+      "actualTask": "Read chapter on threads and semaphore locks",
+      "isCompleted": true,
+      "order": 7
+    },
+    {
+      "id": "planner-8",
+      "_id": "planner-8",
+      "userId": "demo-user-123",
+      "date": "2026-09-21",
+      "time": "2:00 PM",
+      "plannedTask": "Deep Work: Frontend Dashboard",
+      "actualTask": "Got distracted checking notifications for 20 mins",
+      "isCompleted": false,
+      "order": 8
+    },
+    {
+      "id": "planner-9",
+      "_id": "planner-9",
+      "userId": "demo-user-123",
+      "date": "2026-09-21",
+      "time": "3:00 PM",
+      "plannedTask": "Hourly Planner & Priority UI",
+      "actualTask": "Built UI cards matching reference layout",
+      "isCompleted": true,
+      "order": 9
+    },
+    {
+      "id": "planner-10",
+      "_id": "planner-10",
+      "userId": "demo-user-123",
+      "date": "2026-09-21",
+      "time": "4:00 PM",
+      "plannedTask": "Gemini AI Integration",
+      "actualTask": "Configured backend AI analysis controller",
+      "isCompleted": true,
+      "order": 10
+    },
+    {
+      "id": "planner-11",
+      "_id": "planner-11",
+      "userId": "demo-user-123",
+      "date": "2026-09-21",
+      "time": "5:00 PM",
+      "plannedTask": "",
+      "actualTask": "",
+      "isCompleted": false,
+      "order": 11
+    },
+    {
+      "id": "planner-12",
+      "_id": "planner-12",
+      "userId": "demo-user-123",
+      "date": "2026-09-21",
+      "time": "6:00 PM",
+      "plannedTask": "Workout & Meditation",
+      "actualTask": "15 min mindfulness session",
+      "isCompleted": true,
+      "order": 12
+    },
+    {
+      "id": "planner-13",
+      "_id": "planner-13",
+      "userId": "demo-user-123",
+      "date": "2026-09-21",
+      "time": "7:00 PM",
+      "plannedTask": "",
+      "actualTask": "",
+      "isCompleted": false,
+      "order": 13
+    },
+    {
+      "id": "planner-14",
+      "_id": "planner-14",
+      "userId": "demo-user-123",
+      "date": "2026-09-21",
+      "time": "8:00 PM",
+      "plannedTask": "Daily Reflection & Planning Tomorrow",
+      "actualTask": "Logged mistakes and prepared tomorrow priorities",
+      "isCompleted": true,
+      "order": 14
+    },
+    {
+      "id": "planner-15",
+      "_id": "planner-15",
+      "userId": "demo-user-123",
+      "date": "2026-09-21",
+      "time": "9:00 PM",
+      "plannedTask": "",
+      "actualTask": "",
+      "isCompleted": false,
+      "order": 15
+    }
+  ],
+  "reflections": [
+    {
+      "id": "reflection-today",
+      "_id": "reflection-today",
+      "userId": "demo-user-123",
+      "date": "2026-09-21",
+      "mistakes": [
+        "Skipped morning stretching"
+      ],
+      "improvements": [
+        "Wake up 15 mins earlier"
+      ],
+      "notes": "Deep focus on accountability sheet.",
+      "createdAt": "2026-09-21T18:33:34.951Z",
+      "updatedAt": "2026-09-21T18:46:02.916Z"
+    }
+  ],
+  "analyses": [
+    {
+      "id": "analysis-2026-09-21",
+      "_id": "analysis-2026-09-21",
+      "userId": "demo-user-123",
+      "date": "2026-09-21",
+      "tasksCompleted": 7,
+      "totalTasks": 8,
+      "productivity": 9,
+      "focus": 9,
+      "distractions": 1,
+      "energy": 8,
+      "isGoodDay": true,
+      "notes": "Outstanding execution today.",
+      "createdAt": "2026-09-21T18:33:34.951Z",
+      "updatedAt": "2026-09-21T18:46:02.954Z"
+    },
+    {
+      "id": "analysis-2026-09-20",
+      "_id": "analysis-2026-09-20",
+      "userId": "demo-user-123",
+      "date": "2026-09-20",
+      "tasksCompleted": 5,
+      "totalTasks": 8,
+      "productivity": 7,
+      "focus": 7,
+      "distractions": 3,
+      "energy": 7,
+      "isGoodDay": true,
+      "notes": "Good consistency maintained.",
+      "createdAt": "2026-09-21T18:33:34.951Z"
+    },
+    {
+      "id": "analysis-2026-09-19",
+      "_id": "analysis-2026-09-19",
+      "userId": "demo-user-123",
+      "date": "2026-09-19",
+      "tasksCompleted": 4,
+      "totalTasks": 8,
+      "productivity": 6,
+      "focus": 9,
+      "distractions": 4,
+      "energy": 6,
+      "isGoodDay": true,
+      "notes": "Good consistency maintained.",
+      "createdAt": "2026-09-21T18:33:34.951Z"
+    },
+    {
+      "id": "analysis-2026-09-18",
+      "_id": "analysis-2026-09-18",
+      "userId": "demo-user-123",
+      "date": "2026-09-18",
+      "tasksCompleted": 6,
+      "totalTasks": 8,
+      "productivity": 8,
+      "focus": 7,
+      "distractions": 5,
+      "energy": 5,
+      "isGoodDay": true,
+      "notes": "Good consistency maintained.",
+      "createdAt": "2026-09-21T18:33:34.951Z"
+    },
+    {
+      "id": "analysis-2026-09-17",
+      "_id": "analysis-2026-09-17",
+      "userId": "demo-user-123",
+      "date": "2026-09-17",
+      "tasksCompleted": 5,
+      "totalTasks": 8,
+      "productivity": 7,
+      "focus": 9,
+      "distractions": 2,
+      "energy": 8,
+      "isGoodDay": false,
+      "notes": "Good consistency maintained.",
+      "createdAt": "2026-09-21T18:33:34.951Z"
+    },
+    {
+      "id": "analysis-2026-09-16",
+      "_id": "analysis-2026-09-16",
+      "userId": "demo-user-123",
+      "date": "2026-09-16",
+      "tasksCompleted": 4,
+      "totalTasks": 8,
+      "productivity": 6,
+      "focus": 7,
+      "distractions": 3,
+      "energy": 7,
+      "isGoodDay": true,
+      "notes": "Good consistency maintained.",
+      "createdAt": "2026-09-21T18:33:34.951Z"
+    },
+    {
+      "id": "analysis-2026-09-15",
+      "_id": "analysis-2026-09-15",
+      "userId": "demo-user-123",
+      "date": "2026-09-15",
+      "tasksCompleted": 6,
+      "totalTasks": 8,
+      "productivity": 8,
+      "focus": 9,
+      "distractions": 4,
+      "energy": 6,
+      "isGoodDay": true,
+      "notes": "Good consistency maintained.",
+      "createdAt": "2026-09-21T18:33:34.951Z"
+    }
+  ],
+  "goals": [
+    {
+      "id": "goal-1",
+      "_id": "goal-1",
+      "userId": "demo-user-123",
+      "title": "Master Data Structures & Algorithms",
+      "description": "Solve 150 LeetCode Medium/Hard questions across Trees, Graphs, and DP.",
+      "category": "Career",
+      "targetDate": "2026-11-30",
+      "progress": 68,
+      "status": "In Progress",
+      "createdAt": "2026-09-21T18:33:34.951Z"
+    },
+    {
+      "id": "goal-2",
+      "_id": "goal-2",
+      "userId": "demo-user-123",
+      "title": "Ship Full-Stack Accountability Platform",
+      "description": "Deploy production application with real-time tracking, AI insights, and mobile support.",
+      "category": "Career",
+      "targetDate": "2026-10-15",
+      "progress": 92,
+      "status": "In Progress",
+      "createdAt": "2026-09-21T18:33:34.951Z"
+    },
+    {
+      "id": "goal-3",
+      "_id": "goal-3",
+      "userId": "demo-user-123",
+      "title": "Run Half Marathon (21.1 km)",
+      "description": "Build weekly mileage to 35km and finish under 2 hours.",
+      "category": "Fitness",
+      "targetDate": "2026-12-20",
+      "progress": 45,
+      "status": "In Progress",
+      "createdAt": "2026-09-21T18:33:34.951Z"
+    },
+    {
+      "id": "goal-4",
+      "_id": "goal-4",
+      "userId": "demo-user-123",
+      "title": "Read 12 Non-Fiction Books This Year",
+      "description": "Focus on psychology, behavioral habits, and distributed systems.",
+      "category": "Personal",
+      "targetDate": "2026-12-31",
+      "progress": 75,
+      "status": "In Progress",
+      "createdAt": "2026-09-21T18:33:34.951Z"
+    }
+  ],
+  "habits": [
+    {
+      "id": "habit-1",
+      "_id": "habit-1",
+      "userId": "demo-user-123",
+      "title": "DSA Practice",
+      "category": "Study",
+      "icon": "Code",
+      "currentStreak": 12,
+      "longestStreak": 24,
+      "completedDates": [
+        "2026-09-21",
+        "2026-09-20",
+        "2026-09-19",
+        "2026-09-18",
+        "2026-09-17"
+      ],
+      "createdAt": "2026-09-21T18:33:34.951Z"
+    },
+    {
+      "id": "habit-2",
+      "_id": "habit-2",
+      "userId": "demo-user-123",
+      "title": "Morning Exercise & Run",
+      "category": "Fitness",
+      "icon": "Activity",
+      "currentStreak": 8,
+      "longestStreak": 15,
+      "completedDates": [
+        "2026-09-21",
+        "2026-09-20",
+        "2026-09-19",
+        "2026-09-18",
+        "2026-09-17",
+        "2026-09-16"
+      ],
+      "createdAt": "2026-09-21T18:33:34.951Z"
+    },
+    {
+      "id": "habit-3",
+      "_id": "habit-3",
+      "userId": "demo-user-123",
+      "title": "Reading (30 Mins)",
+      "category": "Personal",
+      "icon": "BookOpen",
+      "currentStreak": 14,
+      "longestStreak": 21,
+      "completedDates": [
+        "2026-09-21",
+        "2026-09-20",
+        "2026-09-19",
+        "2026-09-18"
+      ],
+      "createdAt": "2026-09-21T18:33:34.951Z"
+    },
+    {
+      "id": "habit-4",
+      "_id": "habit-4",
+      "userId": "demo-user-123",
+      "title": "Deep Coding Session",
+      "category": "Study",
+      "icon": "Terminal",
+      "currentStreak": 9,
+      "longestStreak": 18,
+      "completedDates": [
+        "2026-09-21",
+        "2026-09-20",
+        "2026-09-19",
+        "2026-09-18",
+        "2026-09-17"
+      ],
+      "createdAt": "2026-09-21T18:33:34.951Z"
+    },
+    {
+      "id": "habit-5",
+      "_id": "habit-5",
+      "userId": "demo-user-123",
+      "title": "Meditation & Breathwork",
+      "category": "Health",
+      "icon": "Sprout",
+      "currentStreak": 6,
+      "longestStreak": 12,
+      "completedDates": [
+        "2026-09-21",
+        "2026-09-20",
+        "2026-09-19",
+        "2026-09-18"
+      ],
+      "createdAt": "2026-09-21T18:33:34.951Z"
+    },
+    {
+      "id": "habit-6",
+      "_id": "habit-6",
+      "userId": "demo-user-123",
+      "title": "Hydration (3 Liters)",
+      "category": "Health",
+      "icon": "Droplets",
+      "currentStreak": 22,
+      "longestStreak": 30,
+      "completedDates": [
+        "2026-09-21",
+        "2026-09-20",
+        "2026-09-19",
+        "2026-09-18",
+        "2026-09-17",
+        "2026-09-16",
+        "2026-09-15"
+      ],
+      "createdAt": "2026-09-21T18:33:34.951Z"
+    }
+  ],
+  "focusSessions": [
+    {
+      "id": "focus-1",
+      "userId": "demo-user-123",
+      "taskTitle": "DSA Practice (Binary Trees)",
+      "durationMinutes": 50,
+      "type": "work",
+      "completedAt": "2026-09-21T14:33:34.951Z"
+    },
+    {
+      "id": "focus-2",
+      "userId": "demo-user-123",
+      "taskTitle": "Project Architecture & Backend",
+      "durationMinutes": 50,
+      "type": "work",
+      "completedAt": "2026-09-21T16:33:34.951Z"
+    },
+    {
+      "id": "focus-3",
+      "userId": "demo-user-123",
+      "taskTitle": "Break & Hydration",
+      "durationMinutes": 10,
+      "type": "break",
+      "completedAt": "2026-09-21T17:33:34.951Z"
+    }
+  ],
+  "notes": [
+    {
+      "id": "note-1",
+      "_id": "note-1",
+      "userId": "demo-user-123",
+      "title": "Mindfulness & The Plant Metaphor",
+      "content": "Treat your brain like a living bonsai. If you don’t water it with daily focus, good sleep, and reflection, it withers. When you water it with small consistent acts of discipline, it flourishes naturally.",
+      "tags": [
+        "Mindset",
+        "Growth",
+        "Philosophy"
+      ],
+      "isPinned": true,
+      "isArchived": false,
+      "createdAt": "2026-09-21T18:33:34.951Z",
+      "updatedAt": "2026-09-21T18:33:34.951Z"
+    },
+    {
+      "id": "note-2",
+      "_id": "note-2",
+      "userId": "demo-user-123",
+      "title": "Operating System Review Checklist",
+      "content": "1. Virtual memory & paging\n2. Mutexes vs Semaphores\n3. Deadlock four conditions (Mutual exclusion, Hold & wait, No preemption, Circular wait)\n4. Context switching overhead",
+      "tags": [
+        "Study",
+        "Computer Science"
+      ],
+      "isPinned": false,
+      "isArchived": false,
+      "createdAt": "2026-09-21T18:33:34.951Z",
+      "updatedAt": "2026-09-21T18:33:34.951Z"
+    }
+  ]
+}

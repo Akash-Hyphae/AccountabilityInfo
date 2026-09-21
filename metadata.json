@@ -1,0 +1,6 @@
+{
+  "name": "accountabilityInfo",
+  "description": "Nurture Today. A Better You Tomorrow. A mindful, honest accountability and productivity system.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
