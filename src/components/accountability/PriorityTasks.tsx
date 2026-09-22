@@ -138,7 +138,7 @@ export const PriorityTasks: React.FC<PriorityTasksProps> = ({ date, onTasksChang
     },
     {
       priority: 'other',
-      label: 'Other Tasks / Personal',
+      label: 'Other task',
       sublabel: '(Personal / Habits / Misc)',
       icon: Layers,
       headerBg: 'bg-[#f0f9ff] dark:bg-sky-950/40',
@@ -149,88 +149,70 @@ export const PriorityTasks: React.FC<PriorityTasksProps> = ({ date, onTasksChang
     }
   ];
 
-  const completedCount = tasks.filter(t => t.completed).length;
-
   return (
-    <div className="bg-white dark:bg-[#1e293b] border border-gray-200/80 dark:border-gray-800 rounded-2xl shadow-xs overflow-hidden transition-colors">
-      {/* Top Banner matching reference image */}
-      <div className="px-4 sm:px-5 py-3.5 border-b border-gray-200/70 dark:border-gray-800 bg-gray-50/60 dark:bg-gray-800/40 flex items-center justify-between">
-        <div className="flex items-center gap-2.5">
-          <div className="p-1.5 bg-emerald-100 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-400 rounded-lg">
-            <CheckSquare className="w-4 h-4" />
-          </div>
-          <div>
-            <h2 className="text-xs sm:text-sm font-bold text-gray-900 dark:text-gray-100">
-              Today's Priority Matrix
-            </h2>
-            <p className="text-[11px] text-gray-500 dark:text-gray-400">
-              Break it down · Prioritize ruthlessly · Execute
-            </p>
-          </div>
+    <div className="space-y-4">
+      {loading ? (
+        /* Loading Skeletons for 4 categories */
+        <div className="space-y-4 animate-pulse">
+          {Array.from({ length: 4 }).map((_, i) => (
+            <div
+              key={i}
+              className="bg-white dark:bg-[#1e293b] border border-gray-200/80 dark:border-gray-800 rounded-2xl p-4 shadow-xs space-y-2"
+            >
+              <div className="h-8 bg-gray-100 dark:bg-gray-800 rounded-xl" />
+              <div className="h-6 bg-gray-50 dark:bg-gray-800/50 rounded-lg w-3/4 ml-2" />
+            </div>
+          ))}
         </div>
+      ) : (
+        categories.map((cat) => {
+          const catTasks = tasks.filter(t => t.priority === cat.priority);
+          const catCompleted = catTasks.filter(t => t.completed).length;
+          const Icon = cat.icon;
+          const isAddingThis = addingCategory === cat.priority;
 
-        {/* Task Counter badge */}
-        <div className="text-[11px] font-semibold px-2.5 py-1 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg text-gray-700 dark:text-gray-300 shadow-2xs">
-          {completedCount} / {tasks.length} Completed
-        </div>
-      </div>
-
-      {/* 4 Priority Sections */}
-      <div className="divide-y divide-gray-100 dark:divide-gray-800/60">
-        {loading ? (
-          /* Loading Skeletons for 4 categories */
-          <div className="p-5 space-y-4 animate-pulse">
-            {Array.from({ length: 3 }).map((_, i) => (
-              <div key={i} className="space-y-2">
-                <div className="h-9 bg-gray-100 dark:bg-gray-800 rounded-xl" />
-                <div className="h-7 bg-gray-50 dark:bg-gray-800/50 rounded-lg w-5/6 ml-4" />
-              </div>
-            ))}
-          </div>
-        ) : (
-          categories.map((cat) => {
-            const catTasks = tasks.filter(t => t.priority === cat.priority);
-            const catCompleted = catTasks.filter(t => t.completed).length;
-            const Icon = cat.icon;
-            const isAddingThis = addingCategory === cat.priority;
-
-            return (
-              <div key={cat.priority} className="p-4 sm:p-5">
-                {/* Category Header */}
-                <div
-                  className={`flex items-center justify-between px-3.5 py-2 rounded-xl border ${cat.headerBg} ${cat.border} mb-2.5 transition-colors`}
-                >
-                  <div className="flex items-center gap-2">
-                    <Icon className={`w-4 h-4 ${cat.accentColor} flex-shrink-0`} />
-                    <span className={`text-xs sm:text-sm font-bold ${cat.headerText}`}>
-                      {cat.label}
-                    </span>
-                    <span className="hidden sm:inline text-[11px] text-gray-500 dark:text-gray-400 font-normal">
-                      {cat.sublabel}
-                    </span>
-                  </div>
-
-                  <div className="flex items-center gap-2">
-                    {catTasks.length > 0 && (
-                      <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${cat.badgeBg}`}>
-                        {catCompleted}/{catTasks.length}
-                      </span>
-                    )}
-
-                    <button
-                      onClick={() => {
-                        setAddingCategory(isAddingThis ? null : cat.priority);
-                        setNewTitle('');
-                      }}
-                      className="text-xs flex items-center gap-1 font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white px-2 py-1 rounded-lg hover:bg-white/60 dark:hover:bg-gray-800/60 transition-colors"
-                      aria-label={`Add ${cat.label} task`}
-                    >
-                      <Plus className="w-3.5 h-3.5" />
-                      <span>Add</span>
-                    </button>
-                  </div>
+          return (
+            <div
+              key={cat.priority}
+              className="bg-white dark:bg-[#1e293b] border border-gray-200/80 dark:border-gray-800 rounded-2xl shadow-xs overflow-hidden transition-colors"
+            >
+              {/* Category Card Header */}
+              <div
+                className={`flex items-center justify-between px-4 py-3 border-b ${cat.border} ${cat.headerBg} transition-colors`}
+              >
+                <div className="flex items-center gap-2">
+                  <Icon className={`w-4 h-4 ${cat.accentColor} flex-shrink-0`} />
+                  <span className={`text-xs sm:text-sm font-bold ${cat.headerText}`}>
+                    {cat.label}
+                  </span>
+                  <span className="hidden sm:inline text-[11px] text-gray-500 dark:text-gray-400 font-normal">
+                    {cat.sublabel}
+                  </span>
                 </div>
 
+                <div className="flex items-center gap-2">
+                  {catTasks.length > 0 && (
+                    <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${cat.badgeBg}`}>
+                      {catCompleted}/{catTasks.length}
+                    </span>
+                  )}
+
+                  <button
+                    onClick={() => {
+                      setAddingCategory(isAddingThis ? null : cat.priority);
+                      setNewTitle('');
+                    }}
+                    className="text-xs flex items-center gap-1 font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white px-2 py-1 rounded-lg hover:bg-white/60 dark:hover:bg-gray-800/60 transition-colors"
+                    aria-label={`Add ${cat.label} task`}
+                  >
+                    <Plus className="w-3.5 h-3.5" />
+                    <span>Add</span>
+                  </button>
+                </div>
+              </div>
+
+              {/* Card Body */}
+              <div className="p-3 sm:p-4">
                 {/* Inline Add Task Input */}
                 {isAddingThis && (
                   <div className="mb-2.5 flex items-center gap-2 bg-gray-50 dark:bg-gray-800/70 p-2 rounded-xl border border-gray-200 dark:border-gray-700 animate-in fade-in duration-150">
@@ -265,13 +247,13 @@ export const PriorityTasks: React.FC<PriorityTasksProps> = ({ date, onTasksChang
                 {/* Task Items List */}
                 <div className="space-y-1">
                   {catTasks.length === 0 && !isAddingThis ? (
-                    <div className="py-2 px-3 text-xs text-gray-400 dark:text-gray-500 italic flex items-center justify-between bg-gray-50/40 dark:bg-gray-800/20 rounded-xl">
+                    <div className="py-2.5 px-3 text-xs text-gray-400 dark:text-gray-500 italic flex items-center justify-between bg-gray-50/40 dark:bg-gray-800/20 rounded-xl">
                       <span>No tasks in this category yet.</span>
                       <button
                         onClick={() => setAddingCategory(cat.priority)}
                         className="text-[11px] text-emerald-600 dark:text-emerald-400 font-semibold hover:underline"
                       >
-                        + Add item
+                        + Add task
                       </button>
                     </div>
                   ) : (
@@ -338,10 +320,10 @@ export const PriorityTasks: React.FC<PriorityTasksProps> = ({ date, onTasksChang
                   )}
                 </div>
               </div>
-            );
-          })
-        )}
-      </div>
+            </div>
+          );
+        })
+      )}
     </div>
   );
 };

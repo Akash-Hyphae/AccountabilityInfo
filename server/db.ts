@@ -198,15 +198,15 @@ function seedInitialData() {
     }
   ];
 
-  // Seed hourly planner matching the screenshot's hourly schedule
+  // Seed hourly planner matching the screenshot's hourly schedule (16 hours: 8 AM to 12 AM)
   const times = [
-    '6:00 AM', '7:00 AM', '8:00 AM', '9:00 AM', '10:00 AM',
-    '11:00 AM', '12:00 PM', '1:00 PM', '2:00 PM', '3:00 PM',
-    '4:00 PM', '5:00 PM', '6:00 PM', '7:00 PM', '8:00 PM', '9:00 PM'
+    '8:00 AM', '9:00 AM', '10:00 AM', '11:00 AM',
+    '12:00 PM', '1:00 PM', '2:00 PM', '3:00 PM',
+    '4:00 PM', '5:00 PM', '6:00 PM', '7:00 PM',
+    '8:00 PM', '9:00 PM', '10:00 PM', '11:00 PM'
   ];
 
   const defaultPlans: Record<string, { planned: string; actual: string; done: boolean }> = {
-    '7:00 AM': { planned: 'Morning Run & Hydration', actual: '4km run completed, feeling fresh', done: true },
     '8:00 AM': { planned: 'DSA Practice (Tree Traversals)', actual: 'Completed 2 problems, reviewed BFS', done: true },
     '9:00 AM': { planned: 'Project Architecture & Backend Setup', actual: 'Configured Express, Mongoose & auth middleware', done: true },
     '10:00 AM': { planned: 'API Endpoints Development', actual: 'Built tasks, planner & reflection routes', done: true },
@@ -216,7 +216,8 @@ function seedInitialData() {
     '3:00 PM': { planned: 'Hourly Planner & Priority UI', actual: 'Built UI cards matching reference layout', done: true },
     '4:00 PM': { planned: 'Gemini AI Integration', actual: 'Configured backend AI analysis controller', done: true },
     '6:00 PM': { planned: 'Workout & Meditation', actual: '15 min mindfulness session', done: true },
-    '8:00 PM': { planned: 'Daily Reflection & Planning Tomorrow', actual: 'Logged mistakes and prepared tomorrow priorities', done: true }
+    '8:00 PM': { planned: 'Daily Reflection & Planning Tomorrow', actual: 'Logged mistakes and prepared tomorrow priorities', done: true },
+    '10:00 PM': { planned: 'Wind Down & Reading', actual: 'Read 15 pages before bed', done: true }
   };
 
   store.planner = times.map((t, idx) => {
@@ -795,16 +796,28 @@ export const db = {
         console.warn('MongoDB getPlanner failed, falling back to local store:', err);
         isMongoConnected = false;
       }
-    } else {
-      const items = store.planner.filter(p => p.userId === userId && p.date === date).sort((a, b) => a.order - b.order);
-      if (items && items.length > 0) return items;
     }
 
-    // Default 6am - 9pm hourly slots if not yet initialized for this user on this date
+    const items = store.planner.filter(p => p.userId === userId && p.date === date);
+    if (items && items.length > 0) {
+      // Deduplicate by time to guarantee no repeated slots
+      const seenTimes = new Set<string>();
+      const deduped: any[] = [];
+      for (const item of items) {
+        if (!seenTimes.has(item.time)) {
+          seenTimes.add(item.time);
+          deduped.push(item);
+        }
+      }
+      return deduped.sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
+    }
+
+    // Default 16 hours from 8:00 AM to 12:00 AM (8 AM to 11 PM slot)
     const times = [
-      '6:00 AM', '7:00 AM', '8:00 AM', '9:00 AM', '10:00 AM',
-      '11:00 AM', '12:00 PM', '1:00 PM', '2:00 PM', '3:00 PM',
-      '4:00 PM', '5:00 PM', '6:00 PM', '7:00 PM', '8:00 PM', '9:00 PM'
+      '8:00 AM', '9:00 AM', '10:00 AM', '11:00 AM',
+      '12:00 PM', '1:00 PM', '2:00 PM', '3:00 PM',
+      '4:00 PM', '5:00 PM', '6:00 PM', '7:00 PM',
+      '8:00 PM', '9:00 PM', '10:00 PM', '11:00 PM'
     ];
     const generated = times.map((t, idx) => ({
       id: `plan-${date}-${idx}`,
@@ -857,6 +870,20 @@ export const db = {
         isMongoConnected = false;
       }
     }
+    // Prevent duplicate entries for the same user, date, and time
+    const existingIdx = store.planner.findIndex(
+      p => p.userId === data.userId && p.date === data.date && p.time === data.time
+    );
+    if (existingIdx !== -1) {
+      store.planner[existingIdx] = {
+        ...store.planner[existingIdx],
+        ...data,
+        updatedAt: new Date().toISOString()
+      };
+      saveStoreToFile();
+      return store.planner[existingIdx];
+    }
+
     const newItem = {
       ...data,
       id: `plan-${Date.now()}`,

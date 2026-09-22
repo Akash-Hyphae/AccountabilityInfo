@@ -20,8 +20,6 @@ interface HourlyPlannerProps {
 }
 
 const DEFAULT_HOURS = [
-  '6:00 AM',
-  '7:00 AM',
   '8:00 AM',
   '9:00 AM',
   '10:00 AM',
@@ -54,7 +52,17 @@ export const HourlyPlanner: React.FC<HourlyPlannerProps> = ({ date }) => {
     try {
       setLoading(true);
       const res = await api.get(`/api/planner/${date}`);
-      setPlanner(res.data || []);
+      const items: PlannerItem[] = res.data || [];
+      // Guarantee zero duplicates by time
+      const seenTimes = new Set<string>();
+      const deduped: PlannerItem[] = [];
+      for (const item of items) {
+        if (!seenTimes.has(item.time)) {
+          seenTimes.add(item.time);
+          deduped.push(item);
+        }
+      }
+      setPlanner(deduped);
     } catch (err) {
       console.error('Error fetching planner:', err);
     } finally {
@@ -206,16 +214,16 @@ export const HourlyPlanner: React.FC<HourlyPlannerProps> = ({ date }) => {
         <table className="w-full text-left border-collapse text-xs sm:text-sm">
           <thead>
             <tr className="border-b border-gray-200/80 dark:border-gray-800 bg-[#edf3f8] dark:bg-gray-800/80 font-bold text-gray-700 dark:text-gray-200 select-none">
-              <th className="py-2.5 px-3 sm:px-4 w-28 sm:w-32 border-r border-gray-200/70 dark:border-gray-800 text-[11px] uppercase tracking-wider font-bold">
+              <th className="py-2.5 px-3 sm:px-4 w-24 sm:w-28 border-r border-gray-200/70 dark:border-gray-800 text-[11px] uppercase tracking-wider font-bold">
                 Time
               </th>
-              <th className="py-2.5 px-3 sm:px-4 w-1/2 border-r border-gray-200/70 dark:border-gray-800 bg-[#eef5fa] dark:bg-gray-800/60 text-[11px] uppercase tracking-wider">
+              <th className="py-2.5 px-3 sm:px-4 w-[36%] min-w-[170px] border-r border-gray-200/70 dark:border-gray-800 bg-[#eef5fa] dark:bg-gray-800/60 text-[11px] uppercase tracking-wider">
                 <span className="text-gray-900 dark:text-gray-100 font-bold">Planned Task</span>
                 <span className="block normal-case font-normal text-[10px] text-gray-500 dark:text-gray-400">
                   (What you will do)
                 </span>
               </th>
-              <th className="py-2.5 px-3 sm:px-4 bg-[#eaf7f0] dark:bg-emerald-950/20 text-[11px] uppercase tracking-wider">
+              <th className="py-2.5 px-3 sm:px-4 w-[54%] min-w-[260px] bg-[#eaf7f0] dark:bg-emerald-950/20 text-[11px] uppercase tracking-wider">
                 <span className="text-emerald-900 dark:text-emerald-200 font-bold">Done & Actual Log</span>
                 <span className="block normal-case font-normal text-[10px] text-emerald-700 dark:text-emerald-400">
                   (What you actually did)
@@ -263,7 +271,7 @@ export const HourlyPlanner: React.FC<HourlyPlannerProps> = ({ date }) => {
                         className="flex items-center gap-1.5 px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-semibold shadow-2xs transition-colors disabled:opacity-50"
                       >
                         <Sparkles className="w-3.5 h-3.5" />
-                        <span>{isSeedingDefault ? 'Initializing...' : 'Populate Standard Day (6 AM – 11 PM)'}</span>
+                        <span>{isSeedingDefault ? 'Initializing...' : 'Populate 16 Hours (8 AM – 12 AM)'}</span>
                       </button>
                       <button
                         onClick={() => setIsAddingCustom(true)}

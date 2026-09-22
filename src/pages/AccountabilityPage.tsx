@@ -102,17 +102,28 @@ export const AccountabilityPage: React.FC = () => {
       {/* AI Daily Insight Banner */}
       <AiInsightCard date={selectedDate} />
 
-      {/* Main Grid: Closely reflecting the Reference Image Layout */}
+      {/* Section 1: Hourly Planner (Left) & Priority Cards (Right) */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-        {/* Left Column: Priority Tasks + Hourly Planner (7 cols on lg screens) */}
-        <div className="lg:col-span-7 space-y-6">
-          <PriorityTasks date={selectedDate} onTasksChanged={handleTasksChanged} />
+        {/* Left Column: Hourly Planner (7 cols on lg screens) */}
+        <div className="lg:col-span-7">
           <HourlyPlanner date={selectedDate} />
         </div>
 
-        {/* Right Column: Today's Analysis + Reflections (5 cols on lg screens) */}
-        <div className="lg:col-span-5 space-y-6">
+        {/* Right Column: 4 Priority Cards (Highest, Medium, Least, Other task) (5 cols on lg screens) */}
+        <div className="lg:col-span-5">
+          <PriorityTasks date={selectedDate} onTasksChanged={handleTasksChanged} />
+        </div>
+      </div>
+
+      {/* Section 2: Daily Analysis & Mindset (Left) & Reflection Cards (Right) */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        {/* Left Column: Daily Analysis & Mindset (7 cols on lg screens) */}
+        <div className="lg:col-span-7">
           <TodayAnalysis date={selectedDate} />
+        </div>
+
+        {/* Right Column: Mistakes, Improvements, Daily Notes & Journal (5 cols on lg screens) */}
+        <div className="lg:col-span-5">
           <ReflectionSection date={selectedDate} />
         </div>
       </div>

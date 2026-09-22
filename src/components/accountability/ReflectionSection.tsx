@@ -131,11 +131,9 @@ export const ReflectionSection: React.FC<ReflectionSectionProps> = ({ date }) =>
   };
 
   return (
-    <div className="space-y-5">
-      {/* 2-Column Grid for Mistakes & Improvements */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        {/* Card 1: What Mistakes Were Made Today? */}
-        <div className="bg-white dark:bg-[#1e293b] border border-rose-200/80 dark:border-rose-950/80 rounded-2xl p-4 sm:p-5 shadow-xs transition-colors flex flex-col justify-between">
+    <div className="space-y-4">
+      {/* Card 1: What Mistakes Were Made Today? */}
+      <div className="bg-white dark:bg-[#1e293b] border border-rose-200/80 dark:border-rose-950/80 rounded-2xl p-4 sm:p-5 shadow-xs transition-colors flex flex-col justify-between">
           <div>
             {/* Header matching image */}
             <div className="flex items-start gap-2.5 pb-3 border-b border-rose-100 dark:border-rose-900/40 mb-3">
@@ -297,7 +295,6 @@ export const ReflectionSection: React.FC<ReflectionSectionProps> = ({ date }) =>
             </button>
           </div>
         </div>
-      </div>
 
       {/* Card 3: Today's Notes */}
       <div className="bg-white dark:bg-[#1e293b] border border-amber-200/80 dark:border-amber-950/60 rounded-2xl p-4 sm:p-5 shadow-xs transition-colors">
