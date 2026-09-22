@@ -1,8 +1,10 @@
 import axios from 'axios';
 
-// Ensure baseURL is always empty string so all Axios requests use relative URLs against current origin (/api/...)
+// Read live backend URL from environment variables, fallback to empty string if not set
+const API_BASE_URL = (import.meta.env.VITE_API_URL || '').replace(/\/+$/, '');
+
 export const api = axios.create({
-  baseURL: '',
+  baseURL: API_BASE_URL,
   headers: {
     'Content-Type': 'application/json',
   },
@@ -23,7 +25,10 @@ api.interceptors.response.use(
   (error) => {
     if (error.response?.status === 401) {
       // If we got unauthorized on a protected route, remove stale token
-      const isAuthRoute = error.config?.url?.includes('/api/auth/login') || error.config?.url?.includes('/api/auth/register') || error.config?.url?.includes('/api/auth/demo');
+      const isAuthRoute =
+        error.config?.url?.includes('/api/auth/login') ||
+        error.config?.url?.includes('/api/auth/register') ||
+        error.config?.url?.includes('/api/auth/demo');
       if (!isAuthRoute) {
         localStorage.removeItem('accountability_token');
         localStorage.removeItem('accountability_user');
